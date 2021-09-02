@@ -40,9 +40,6 @@ def get_data() -> dict:
         main_container = soup.find("main", class_="ds-container rds")
         instruction = main_container.find("article", class_="ds-or-3").find("div", class_="ds-box").text.strip()
 
-
-
-
         #tags = instructions[15].text.replace(" ", "").splitlines()
 
         tags = main_container.find_all("a", class_="ds-tag bi-tags")

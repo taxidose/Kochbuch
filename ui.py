@@ -10,7 +10,9 @@ ________|                Taxis                 |_______
 /__________)                                (_________\ """)
         print(f"\n--- H A U P T M E N Ü ---\n"
               f"\n"
-              f"(0) Neues Rezept\n"
+              f"(0) Neues Rezept (von Chefkoch)\n"
+              f"(9) Neues Rezept (freihand)\n"
+              f"\n"
               f"(1) Zufälliges Rezept\n"
               f"(2) Rezept Suchen\n"
               f"(3) Alle Rezepte anzeigen"
@@ -18,9 +20,9 @@ ________|                Taxis                 |_______
               f"-------------------------")
 
         while True:
-            choice = input("0 / 1 / 2 / 3 ? ")
+            choice = input("0 / 9 // 1 / 2 / 3 ? ")
 
-            if choice in ["0", "1", "2", "3"]:
+            if choice in ["0", "1", "2", "3", "9"]:
                 return choice
 
             elif choice in ["exit", "quit", "q", "ende"]:

@@ -1,5 +1,5 @@
 class Recipe:
-    def __init__(self, title, ingredients, portions, instruction, times, tags, url):
+    def __init__(self, title=None, ingredients=None, portions=None, instruction=None, times=None, tags=None, url=None):
         self.title = title
         self.ingredients = ingredients
         self.portions = portions
@@ -14,7 +14,11 @@ class Recipe:
 
     def __str__(self):
         return f"""
-{self.title}
+        
+----------------------------------------------        
+----------------------------------------------        
+{self.title.upper()}
+----------------------------------------------
 ----------------------------------------------
 
 Zutaten für {self.portions} Portionen:
@@ -25,19 +29,34 @@ Zutaten für {self.portions} Portionen:
 {self.instruction}
 
 ----------------------------------------------
-
 {self.times}
-
 ----------------------------------------------
-
 Tags: {self.tags}
-
 ----------------------------------------------
-
 Rating: {self.rating}
-
 ----------------------------------------------
 """
+
+    def as_dict(self):
+        return {"title": self.title, "ingredients": self.ingredients, "portions": self.portions,
+                "instruction": self.instruction, "times": self.times,
+                "tags": self.tags, "url": self.url}
+
+    def update(self):
+        self.title = input("Rezeptname: ")
+        ingredients_list = input("Zutaten (z.B. 3 Eier, 1L Bier, etwas Salz): ").split(", ")
+        ingredients_tuple_list = []
+        for ingredient in ingredients_list:
+            ingredient_tuple = tuple(ingredient.split())
+            ingredients_tuple_list.append(ingredient_tuple)
+        self.ingredients = ingredients_tuple_list
+        self.portions = input("Portionen: ")
+        self.instruction = input("Anleitung: ")
+        self.times = input("Zeit: ")
+        self.tags = input("Tags: ")
+        self.url = input("Url: ")
+
+        # print(f"Rezept {self.title} aktualisiert")
 
 
 class Ingredient:

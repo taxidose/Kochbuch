@@ -3,10 +3,13 @@ from ui import UI
 from database import save_new_recipe, connect_to_db, get_recipe_by_title, TABLE_LIST, create_table, \
     get_all_recipe_titles
 from time import sleep
+from classes import Recipe
+
+DB_PATH = r"C:\Users\taxi\Nextcloud\Sicherung\recipe.db"
 
 
 def main():
-    db = connect_to_db("recipe.db")
+    db = connect_to_db(DB_PATH)
     for table in TABLE_LIST:
         create_table(db, table)
     interface = UI
@@ -16,6 +19,11 @@ def main():
         if choice == "0":
             new_recipe_data = get_data()
             save_new_recipe(db, new_recipe_data)
+
+        elif choice == "9":
+            new_custom_recipe = Recipe()
+            new_custom_recipe.update()
+            save_new_recipe(db, new_custom_recipe.as_dict())
 
         elif choice == "1":
             print(""
@@ -34,7 +42,7 @@ def main():
             print(recipes)
 
         print()
-        input("Enter drücken zum Fortfahren...")
+        input("Enter drücken um fortzufahren...")
 
 
 if __name__ == "__main__":
