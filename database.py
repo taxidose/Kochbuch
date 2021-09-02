@@ -19,14 +19,14 @@ CREATE_TABLE_RECIPE_INGREDIENTS = """CREATE TABLE IF NOT EXISTS recipe_ingredien
                                         ingredient_amount TEXT,
                                         ingredient_name TEXT NOT NULL,
                                         portions INTEGER,
-                                        FOREIGN KEY (recipe_title) REFERENCES recipes (title),
+                                        FOREIGN KEY (recipe_title) REFERENCES recipes (title) ON DELETE CASCADE,
                                         FOREIGN KEY (ingredient_name) REFERENCES ingredients (name)                                        
                                     );"""
 
 CREATE_TABLE_RECIPE_TAGS = """CREATE TABLE IF NOT EXISTS recipe_tags (
                                         recipe_title TEXT NOT NULL,
                                         tag TEXT NOT NULL,
-                                        FOREIGN KEY (recipe_title) REFERENCES recipes (title)                                                                                
+                                        FOREIGN KEY (recipe_title) REFERENCES recipes (title) ON DELETE CASCADE                                                                               
                                     );"""
 
 TABLE_LIST = [CREATE_TABLE_RECIPES, CREATE_TABLE_INGREDIENTS, CREATE_TABLE_RECIPE_INGREDIENTS,
@@ -60,7 +60,7 @@ def insert_into(conn, insert_into_sql, values: tuple):
         c = conn.cursor()
         c.execute(insert_into_sql, values)
         conn.commit()
-        print(f"[INFO] Entry inserted ({insert_into_sql})")
+        # print(f"[INFO] Entry inserted ({insert_into_sql})")
     except Error as e:
         print(f"[ERROR] {e} ({insert_into_sql})")
 
@@ -109,21 +109,21 @@ def get_recipe_by_title(conn, title):
         recipe = c.fetchone()
         c.execute(sql_recipe_ingredients, title_value)
         ingredients = c.fetchall()
-        portions = ingredients[0][2]
+        portions = ingredients[0][3]
         ingredients = [(ingredient[1], ingredient[2]) for ingredient in ingredients]
 
         c.execute(sql_recipe_tags, title_value)
         tags = c.fetchall()
         tags = [tag[1] for tag in tags]
 
-        if recipe is None:
-            print("Rezept nicht gefunden")
-
         return Recipe(recipe[0], ingredients, portions, recipe[1], recipe[2], tags,
                       recipe[4])
 
     except Error as e:
         print(f"[ERROR] {e}")
+
+    except IndexError:
+        return "Rezept nicht gefunden..."
 
 
 def get_all_recipe_titles(conn):
@@ -133,11 +133,12 @@ def get_all_recipe_titles(conn):
         c = conn.cursor()
         c.execute(sql)
         recipes = c.fetchall()
+        recipe_titles = [title[0] for title in recipes]
 
         if not recipes:
             return "Keine Rezepte gespeichert..."
 
-        return recipes
+        return recipe_titles
 
 
     except Error as e:
