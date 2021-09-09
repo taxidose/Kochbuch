@@ -16,8 +16,9 @@ def get_valid_url(url=None):
     return None
 
 
-def get_data() -> dict:
-    url = get_valid_url()
+def get_data(url=None) -> dict:
+    if not url:
+        url = get_valid_url()
     html_text = requests.get(url).text
     soup = BeautifulSoup(html_text, "lxml")
 

@@ -123,7 +123,7 @@ def get_recipe_by_title(conn, title):
         print(f"[ERROR] {e}")
 
     except IndexError:
-        return "Rezept nicht gefunden..."
+        print("Rezept nicht gefunden...")
 
 
 def get_all_recipe_titles(conn):
@@ -139,7 +139,6 @@ def get_all_recipe_titles(conn):
             return "Keine Rezepte gespeichert..."
 
         return recipe_titles
-
 
     except Error as e:
         print(f"[ERROR] {e}")

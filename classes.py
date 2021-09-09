@@ -58,6 +58,20 @@ Rating: {self.rating}
 
         # print(f"Rezept {self.title} aktualisiert")
 
+    def ingredients_formatted(self):
+        ingredients_string = ""
+        for ingredient in self.ingredients:
+            ingredients_string += f"- {ingredient[0]} {ingredient[1]}\n"
+
+        return f"{self.title} ({self.portions} Portionen)\n" \
+               f"-------------------------------------\n" \
+               f"{ingredients_string}" \
+               f"-------------------------------------"
+
+
+
+
+
 
 class Ingredient:
     def __init__(self, name):

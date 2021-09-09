@@ -31,4 +31,19 @@ ________|                Taxis                 |_______
 
             print("Ungültige Auswahl")
 
+    @staticmethod
+    def recipe_menu():
+        print(f"(1) Zutatenliste verschicken (Telegram)\n"
+              f"(0) Hauptmenü\n")
 
+        while True:
+            choice = input("1 // 0 ? ")
+
+            if choice in ["1", "0"]:
+                return choice
+
+            elif choice in ["exit", "quit", "q", "ende"]:
+                print("Kochbuch wird beendet...")
+                quit()
+
+            print("Ungültige Auswahl")

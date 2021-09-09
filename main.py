@@ -4,6 +4,7 @@ from database import save_new_recipe, connect_to_db, get_recipe_by_title, TABLE_
     get_all_recipe_titles
 from time import sleep
 from classes import Recipe
+from telegram_bot import send_msg
 
 DB_PATH = r"C:\Users\taxi\Nextcloud\Sicherung\recipe.db"
 
@@ -34,7 +35,12 @@ def main():
         elif choice == "2":
             recipe_title = input("Rezeptname eingeben: ")
             recipe = get_recipe_by_title(db, recipe_title)
-            print(recipe)
+
+            if recipe:
+                print(recipe)
+                choice_recipe_menu = interface.recipe_menu()
+                if choice_recipe_menu == "1":
+                    send_msg(recipe.ingredients_formatted())
 
         elif choice == "3":
             recipes = get_all_recipe_titles(db)
